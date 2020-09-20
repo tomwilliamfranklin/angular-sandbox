@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Column } from '../../../model/column.model';
 import { User } from '../../../model/user.model';
 
@@ -36,16 +36,24 @@ export class TestTabOneComponent implements OnInit {
   constructor() { }
 
   async ngOnInit() {
+    setTimeout(async () => {
     this.headerTextChange.emit('TAB 1');
+
+    this.rowDataChange.emit([]);
+    this.columnDefsChange.emit([]);
+
+    // the await has to come before the columndefs for this to work because of the emit above ^.
+    this.rowData =  await this.getDummyData();
     this.columnDefs =  [
       {headerName: 'id', field: 'id' },
       {headerName: 'First Name', field: 'firstName' },
       {headerName: 'Last Name', field: 'lastName'},
       {headerName: 'Email', field: 'email'},
     ];
-    this.rowData =  await this.getDummyData();
+
     this.rowDataChange.emit(this.rowData);
     this.columnDefsChange.emit(this.columnDefs);
+  }, 0);
   }
 
   async getDummyData(): Promise<User[]> {

@@ -34,19 +34,25 @@ export class TestTabTwoComponent implements OnInit {
   public loadingChange = new EventEmitter<boolean>();
 
 
-  constructor() { }
+  constructor() {   }
 
   async ngOnInit() {
-    this.headerTextChange.emit('TAB 2');
-    this.rowData =  await this.getDummyData();
-    this.columnDefs = [{headerName: 'id', field: 'id' },
-    {headerName: 'Name', field: 'name' },
-    {headerName: 'Milage', field: 'milage' },
-    {headerName: 'Wheel Count', field: 'wheels' }
-  ],
+    setTimeout(async () => {
+      this.headerTextChange.emit('TAB 2');
 
-    this.rowDataChange.emit(this.rowData);
-    this.columnDefsChange.emit(this.columnDefs);
+      this.rowDataChange.emit([]);
+      this.columnDefsChange.emit([]);
+
+       // the await has to come before the columndefs for this to work because of the emit above ^.
+      this.rowData =  await this.getDummyData();
+      this.columnDefs = [{headerName: 'id', field: 'id' },
+      {headerName: 'Name', field: 'name' },
+      {headerName: 'Milage', field: 'milage' },
+      {headerName: 'Wheel Count', field: 'wheels' }],
+
+      this.rowDataChange.emit(this.rowData);
+      this.columnDefsChange.emit(this.columnDefs);
+    }, 0);
   }
 
   async getDummyData(): Promise<Car[]> {
