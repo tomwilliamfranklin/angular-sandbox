@@ -1,0 +1,22 @@
+<div class="row">
+  <nb-card style="width: 100%">
+    <nb-card-body>
+      <nb-tabset (changeTab)="onTabChange($event)">
+        <nb-tab tabTitle="Simple Tab #1" tabId="1">
+          <ngx-test-tab-one *ngIf="currentTabId == 1" [(headerText)]="string" [(rowData)]="rowData" [(loading)]="loading" [(columnDefs)]="columnDefs" (columnDefsChange)="onColumnDefsChange()"></ngx-test-tab-one>
+        </nb-tab>
+        <nb-tab tabTitle="Simple Tab #2" tabId="2">
+          <ngx-test-tab-two *ngIf="currentTabId == 2" [(headerText)]="string" [(rowData)]="rowData" [(loading)]="loading" [(columnDefs)]="columnDefs" (columnDefsChange)="onColumnDefsChange()"></ngx-test-tab-two>
+        </nb-tab>
+      </nb-tabset>
+
+      <h1>{{string}}</h1>
+
+      <ngx-custom-table [(loading)]="loading"
+      [(rowData)]="rowData"
+      [(columnDefs)]="columnDefs">
+      </ngx-custom-table>
+
+    </nb-card-body>
+  </nb-card>
+</div>
